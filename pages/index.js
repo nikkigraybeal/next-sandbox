@@ -1,8 +1,19 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { htmlMailer } from '../lib/mailer'
+import welcome from '../lib/mailer/templates/welcome'
 
 export default function Home() {
+
+  const sendEmail = async () => {
+    const user = {
+      firstName: "Nikki",
+      personalEmail: "nikki@codethedream.org"
+    }
+    htmlMailer(user, welcome)
+  }
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -15,7 +26,7 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
-
+        <button onClick={sendEmail} style={{background: "#50a3ba", height: "100px", width: "200px", marginTop: "25px", fontSize: "2rem", borderRadius: "8px"}}>Send Email</button>
         <p className={styles.description}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.js</code>
