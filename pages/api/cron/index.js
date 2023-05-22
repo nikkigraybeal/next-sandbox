@@ -1,16 +1,17 @@
 import sendgrid from "@sendgrid/mail";
-
+import welcome from "../../../lib/mailer/templates/welcome"
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 export default async function sendEmail(req, res) {
-  const body = req.body;
 
+  const emailInfo = welcome({firstName: "Nikki"})
+  
   const options = {
-    to: body.to,
-    from: body.from,
-    subject: body.subject,
-    text: body.text,
-    html: body.html
+    to: "nikki@codethedream.org",
+    from: "nikki@codethedream.org",
+    subject: "Email sent",
+    text: "You sent and email, wow",
+    html: emailInfo.html
   }
 
   try {
@@ -20,5 +21,5 @@ export default async function sendEmail(req, res) {
     return res.status(error.statusCode || 500).json({ error: error.message });
   }
 
-  return res.status(200).json({ error: "" });
+  return res.status(200).json("mail sent!");
 }
